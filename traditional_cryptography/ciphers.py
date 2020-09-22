@@ -26,3 +26,24 @@ def caesar_decoding(n,m):
   print('Encoded char:', char[n])
   print('Index:', index,'Char: ', char[index])
   return char[index]
+
+#block transposition cipher
+def block_transposition_encoding(permutation_list, org_text, num_char):
+
+  length = len(org_text)
+  #fill dummy char(X)
+  to_fill = num_char - (length%num_char)
+  text = org_text+'X'*to_fill
+  #permutation_list = [3,5,1,2,4]
+  #to use the element in permutation_list as index, we need to deduct them by 1
+  permutation_list = [x-1 for x in permutation_list]
+  encoded_text = ''
+  p = 0
+  print(text)
+  while p < len(text):
+    for i in range(5):
+      code_index = p+permutation_list[i]
+      encoded_text += text[code_index]
+      print('Org:',text[p+i], 'Encoded:', text[code_index])
+    p += 5
+  return encoded_text
