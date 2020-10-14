@@ -1,6 +1,8 @@
+#Table reference https://cafbit.com/resource/DES.java
 class public_tables:
     def __init__(self):
         print('assessing table')
+        #Initial Permutation
         self.IP_table = [
             58, 50, 42, 34, 26, 18, 10, 2,
             60, 52, 44, 36, 28, 20, 12, 4,
@@ -12,6 +14,7 @@ class public_tables:
             63, 55, 47, 39, 31, 23, 15, 7
         ]
 
+        #Final Permutation
         self.FP_table = [
             40, 8, 48, 16, 56, 24, 64, 32,
             39, 7, 47, 15, 55, 23, 63, 31,
@@ -23,6 +26,7 @@ class public_tables:
             33, 1, 41, 9, 49, 17, 57, 25
         ]
 
+        #Expansion Permutation
         self.E_table = [
             32, 1,  2,  3,  4,  5,
             4,  5,  6,  7,  8,  9,
@@ -34,6 +38,7 @@ class public_tables:
             28, 29, 30, 31, 32, 1
         ]
 
+        #Substitution Boxes
         self.S_tables = [[14, 4,  13, 1,  2,  15, 11, 8,  3,  10, 6,  12, 5,  9,  0,  7,
                 0,  15, 7,  4,  14, 2,  13, 1,  10, 6,  12, 11, 9,  5,  3,  8,
                 4,  1,  14, 8,  13, 6,  2,  11, 15, 12, 9,  7,  3,  10, 5,  0,
@@ -68,6 +73,7 @@ class public_tables:
                 2,  1,  14, 7,  4,  10, 8,  13, 15, 12, 9,  0,  3,  5,  6,  11]
         ]
 
+        #Permutation for Feistel function
         self.P_table = [
             16, 7,  20, 21,
             29, 12, 28, 17,
@@ -79,6 +85,7 @@ class public_tables:
             22, 11, 4,  25
         ]
 
+        #PC1 Permutation
         self.PC1_table = [
             57, 49, 41, 33, 25, 17, 9,
             1,  58, 50, 42, 34, 26, 18,
@@ -90,6 +97,7 @@ class public_tables:
             21, 13, 5,  28, 20, 12, 4
         ]
 
+        #PC2 Permutation
         self.PC2_table = [
             14, 17, 11, 24, 1,  5,
             3,  28, 15, 6,  21, 10,

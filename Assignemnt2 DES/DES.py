@@ -1,6 +1,14 @@
 #reference: https://github.com/Hamza-Megahed/des-calculator
 import public_tables as pt
 
+tables = pt.public_tables()
+IP_table = tables.IP_table
+PC1_table = tables.PC1_table
+PC2_table = tables.PC2_table
+E_table = tables.E_table
+S_table = tables.S_tables
+P_table = tables.P_table
+
 def hex_to_bin(msg):
     return bin(int(msg,16))[2:].zfill(64)
 
@@ -41,8 +49,31 @@ def rotate(shift_num, direction, key):
 def transformation(table, shift_num, direction, c, d):
     c1 = rotate(shift_num, direction, c)
     d1 = rotate(shift_num, direction, d)
-    print('cd1', c1+d1)
+    #print('cd1', c1+d1)
     return PC2(table, len(table), c1+d1),c1,d1 #48 bits, 28 bits, 28 bits
+
+def expansion(table, src_width, src):
+    return permute(table, src_width, src)
+
+def f(r_msg, key):
+    expanded_r = expansion(E_table, len(E_table), r_msg) #r is expanded from 32 bits to 48 bits
+    bin_r_msg = int(expanded_r, 2)
+    bin_key = int(key, 2)
+    xor = bin(bin_r_msg^bin_key)[2:].zfill(48)
+    #divide into 8 segment and pass each segment to s_box according to order
+    after_s = ''
+
+    for i in range(8):
+        after_s += s_box(S_table[i], xor[i*6:(i+1)*6])
+    return permute(P_table, len(P_table), after_s)
+
+def s_box(table, six_b_key):
+    #convert [1:5] to decimal -> pick up column
+    #convert[0] U [5] to decimal -> pick up row
+    column = int(six_b_key[1:5],2)
+    row = int(six_b_key[0]+six_b_key[-1], 2)
+    index = 16*row+column
+    return bin(table[index])[2:].zfill(4)
 
 # key: 0123456789ABCDEF
 # plain text: 789AB123456789AA
