@@ -14,8 +14,6 @@ def gcd(a,b):
         #print(b)
         return gcd(b, a%b)
 
-
-
 def gen_key(key_size):
     key_holder = pow(key_size,2)
     p = random.randint(1, key_holder)
@@ -40,8 +38,8 @@ def encrypt(msg, q, h, g):
     k = gen_key(q)
     s = modular_exp(h,k,q)
     p = modular_exp(g,k,q)
-    print('g^k', p)
-    print('g^ak', s)
+    #print('g^k', p)
+    #print('g^ak', s)
 
     for i in range(len(msg_char)):
         msg_char[i] = s * ord(msg_char[i])
@@ -76,14 +74,14 @@ if __name__ == '__main__':
     p = random.randint(2, key_size)
     g = random.randint(2, pow(10,20))
 
-    key = gen_key(key_size) #reciever private key
+    key = gen_key(key_size) #receiver private key
     h = modular_exp(g, key, p)
 
     # 2. sender retrive (h, p, g)
     #     select random value k and calculates two new values p(g^k) and s(g^ak)
     #     send (p, M*s)
     cipher, q = encrypt(msg, p, h, g)
-
+    print('Cipher:', cipher)
     # 3. reciever decrypt message
     org_msg = decrypt(cipher, q, key, p)
     org_msg_str = ''.join(org_msg)
